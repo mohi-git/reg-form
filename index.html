@@ -154,8 +154,13 @@ function updateCalendar() {
 }
 	
 function storeInput() {
+
+	var local_storage_array = [];
+	var temp_local_storage_array = JSON.parse(localStorage.getItem("user-entries"));
+	if(temp_local_storage_array != null) {
+		local_storage_array = temp_local_storage_array;
+	}
 	
-	var local_storage_array = JSON.parse(localStorage.getItem("user-entries"));
 	var local_storage_entry = new Object();
 	local_storage_entry.name = document.getElementById("name").value;
 	local_storage_entry.email  = document.getElementById("email").value;
@@ -174,6 +179,14 @@ function storeInput() {
 
 function showTable() {
 
+	var table_row = document.getElementById("entries_table");
+	 if(table_row.rows.length > 0) {
+		let size = table_row.rows.length;
+		for(var j = size - 1; j > 1; j--) {
+			table_row.deleteRow(j);
+			size = table_row.rows.length;
+		}
+	}
 
 	var user_entries = JSON.parse(localStorage.getItem("user-entries"));
 	for(var i=0; i<user_entries.length; i++) {
