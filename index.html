@@ -120,7 +120,6 @@ label {
 function renderTable() {
 	storeInput();
     showTable();
-	return false;
 }
 		
 function checkWordLength(value, message) {
@@ -189,36 +188,46 @@ function showTable() {
 	}
 
 	var user_entries = JSON.parse(localStorage.getItem("user-entries"));
-	for(var i=0; i<user_entries.length; i++) {
-		let row = document.createElement("tr");
+	if(user_entries != null) {
+		for(var i=0; i<user_entries.length; i++) {
+			let row = document.createElement("tr");
 
-		let column1 = document.createElement("td");
-		const column1text = document.createTextNode(user_entries[i]['name']);
-		column1.appendChild(column1text);
+			let column1 = document.createElement("td");
+			const column1text = document.createTextNode(user_entries[i]['name']);
+			column1.appendChild(column1text);
 
-		let column2 = document.createElement("td");
-		const column2text = document.createTextNode(user_entries[i]['email']);
-		column2.appendChild(column2text);
+			let column2 = document.createElement("td");
+			const column2text = document.createTextNode(user_entries[i]['email']);
+			column2.appendChild(column2text);
 
-		let column3 = document.createElement("td");
-		const column3text = document.createTextNode(user_entries[i]['password']);
-		column3.appendChild(column3text);
+			let column3 = document.createElement("td");
+			const column3text = document.createTextNode(user_entries[i]['password']);
+			column3.appendChild(column3text);
 
-		let column4 = document.createElement("td");
-		const column4text = document.createTextNode(user_entries[i]['dob']);
-		column4.appendChild(column4text);
+			let column4 = document.createElement("td");
+			const column4text = document.createTextNode(user_entries[i]['dob']);
+			column4.appendChild(column4text);
 
-		let column5 = document.createElement("td");
-		const column5text = document.createTextNode(user_entries[i]['checkbox']);
-		column5.appendChild(column5text);
+			let column5 = document.createElement("td");
+			const column5text = document.createTextNode(user_entries[i]['checkbox']);
+			column5.appendChild(column5text);
 
-		row.appendChild(column1);
-		row.appendChild(column2);
-		row.appendChild(column3);
-		row.appendChild(column4);
-		row.appendChild(column5);
+			row.appendChild(column1);
+			row.appendChild(column2);
+			row.appendChild(column3);
+			row.appendChild(column4);
+			row.appendChild(column5);
 
-		document.getElementById("entries_table").appendChild(row);
+			document.getElementById("entries_table").appendChild(row);
+		}
+		
+		document.getElementById("name").value =  user_entries[user_entries.length-1]['name'];	
+		document.getElementById("email").value =  user_entries[user_entries.length-1]['email'];	
+		document.getElementById("password").value =  user_entries[user_entries.length-1]['password'];	
+		document.getElementById("dob").value =  user_entries[user_entries.length-1]['dob'];	
+		if(user_entries[user_entries.length-1]['checkbox']===true) {
+			document.getElementById("checkbox").click(); 
+		}
 	}
 }
 
@@ -229,7 +238,7 @@ function showTable() {
 <body onload="updateCalendar();">
 
 <div class="container_div" style="width: 385px;">
-  <form id="registration_form" onsubmit="return renderTable()">
+  <form id="registration_form" onsubmit="renderTable()">
 	<h1 style="text-align:center; font-weight: bold">Registration Form</h1><br>
     <div><label ><b>Name </b></label><input type="text" id="name" required placeholder="Enter full name" /><br>
 	</div><br>
@@ -260,5 +269,9 @@ function showTable() {
   </tr>
 </table>
 </div>
+
+<script>
+	showTable(); 
+</script>
 </body>
 </html>
